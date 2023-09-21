@@ -1,8 +1,11 @@
 # importando SQLite
+import random
 import sqlite3
 import sqlite3 as lite
 import pandas as pd
 import io
+from sqlite3 import Error
+from tkinter import filedialog, messagebox, simpledialog
 
 # Criando conexão
 con = lite.connect('dados.db')
@@ -191,21 +194,32 @@ def porcentagem_valor():
     
 # Backup
 def backup():
-    with io.open('infos_financ.sql','w') as f:
-        for linha in con.interdump():
-            f.write('%s\n' % linha)
-    print('Backup realizado com sucesso.')
-    print('Salvo como infos_financ.sql')
-    con.close()
+    nome_arquivo = filedialog.asksaveasfilename()
+    con = sqlite3.connect('dados.db')
+    # Open() function 
+    with io.open(nome_arquivo+'.sql', 'w') as p: 
+            
+        # iterdump() function
+        for line in con.iterdump(): 
+            
+            p.write('%s\n' % line)
 
+    con.close()
+        
+    messagebox.showinfo('Sucesso','Salvo com sucesso!')
+    
 # Restaurando Backup
 def rec_backup():
-    con = sqlite3.connect('clientes_recuperado.db')
+    arquivo = filedialog.askopenfile(mode='r')
+    con = sqlite3.connect('dados.db')
     cursor = con.cursor()
-    f = io.open('infos_financ.sql','r')
-    sql = f.read()
+    #f = io.open(arquivo,'r')
+    #sql = f.read()
+    sql = arquivo.read()
     cursor.executescript(sql)
-    print('Banco de dados recuperado com sucesso.')
-    print('Salvo como clientes_recuperado.db')
+    
+    con = sqlite3.connect('dados.db')
 
     con.close()
+
+    messagebox.showinfo('Sucesso','Informações carregadas com sucesso!')

@@ -76,11 +76,25 @@ app_logo.place(x=0, y=0)
 
 # Botão Backup
 
+img_backup = Image.open('img/save.png')
+img_backup = img_backup.resize((17,17))
+img_backup = ImageTk.PhotoImage(img_backup)
 
+botao_backup = Button(frameCima, image=img_backup,command=backup, text="Salvar".upper()
+                                , width=82, compound=LEFT,anchor=NW, font=('Ivy 7 bold')
+                                , bg=co1, fg=co0, overrelief=RIDGE)
+botao_backup.place(x=655, y=10)
 
 # Botão Restaurar
 
+img_restaurar = Image.open('img/download.png')
+img_restaurar = img_restaurar.resize((17,17))
+img_restaurar = ImageTk.PhotoImage(img_restaurar)
 
+botao_restaurar = Button(frameCima, image=img_restaurar,command=rec_backup, text="Restaurar".upper()
+                                , width=82, compound=LEFT,anchor=NW, font=('Ivy 7 bold')
+                                , bg=co1, fg=co0, overrelief=RIDGE)
+botao_restaurar.place(x=775, y=10)
 
 # Definindo tree como global
 
